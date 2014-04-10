@@ -126,8 +126,6 @@ def bi_():
   a = zDS()
   b = zDS()
   c = zDS()
-  d = zDS()
-  doDS(d)
   parse(b)
   doDS(c)
   parse(a)
@@ -135,8 +133,6 @@ def bi_():
 def _bi():
   a = zDS()
   b = zDS()
-  c = zDS()
-  doDS(c)
   parse(a)
   doDS(b)
   parse(a)
@@ -159,8 +155,6 @@ def tri_():
   c = zDS()
   d = zDS()
   e = zDS()
-  f = zDS()
-  doDS(f)
   parse(c)
   doDS(e)
   parse(b)
@@ -171,8 +165,6 @@ def _tri():
   a = zDS()
   b = zDS()
   c = zDS()
-  d = zDS()
-  doDS(d)
   parse(a)
   doDS(c)
   parse(a)
@@ -1005,7 +997,7 @@ def parse(retazec):
 def run(subor):
   global dataStack, helpStack
   if not subor:
-    print('Nebol zadaný vstupný súbor s programom alebo program.')
+    print('No source file or program.')
     return
   source = ''
   try:
