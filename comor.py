@@ -1027,7 +1027,7 @@ def run(subor):
     print('helpStack:', helpStack)
 
 def demo():
-  run('Documents/zdrojaky/python/prog.cmr')
+  run('prog.cmr')
 
 if __name__ == '__main__':
   demo()
