@@ -16,9 +16,9 @@ hlasky = ['\nVynimka v programe!',
           '\nIndex mimo rozsah vstupného reťazca!',
           '\nNesprávny počet zátvoriek!',
           '\nNesprávny počet apostrofov!',
-          '\nSúbor nenájdený!'] #chybove hlasky
+          '\nSúbor nenájdený!']
 
-def zDS(): #vyberie vrchny prvok zo zasobnika dataStack
+def zDS():
   global dataStack
   try:
     x = dataStack.pop()
@@ -26,11 +26,11 @@ def zDS(): #vyberie vrchny prvok zo zasobnika dataStack
     raise Vynimka(hlasky[1])
   return x
 
-def doDS(x): #zapise prvok na vrch zasobnika dataStack
+def doDS(x):
   global dataStack
   dataStack.append(str(x))
 
-def zHS(): #vyberie vrchny prvok zo zasobnika helpStack
+def zHS():
   global helpStack
   try:
     x = helpStack.pop()
@@ -38,82 +38,82 @@ def zHS(): #vyberie vrchny prvok zo zasobnika helpStack
     raise Vynimka(hlasky[2])
   return x
 
-def doHS(x): #zapise prvok na vrch zasobnika helpStack
+def doHS(x):
   global helpStack
   helpStack.append(str(x))
 
-def mov(): #presunie prvok z dataStack do helpStack
+def mov():
   a = zDS()
   doHS(a)
 
-def rem(): #presunie prvok z helpStack do dataStack
+def rem():
   a = zHS()
   doDS(a)
 
-def dup(): #zduplikuje vrchny prvok
+def dup():
   a = zDS()
   doDS(a)
   doDS(a)
 
-def swap(): #prevrati 2 vrchne prvky
+def swap():
   a = zDS()
   b = zDS()
   doDS(a)
   doDS(b)
 
-def drop(): #vymaze vrchny prvok
+def drop():
   zDS()
 
-def over(): #na vrch skopiruje 2 prvok od vrchu
+def over():
   a = zDS()
   b = zDS()
   doDS(b)
   doDS(a)
   doDS(b)
 
-def dip(): #vymaze druhy prvok, vykona vrchny prvok a vlozi druhy prvok
+def dip():
   a = zDS()
   b = zDS()
   parse(a)
   doDS(b)
 
-def _dip(): #vymaze druhy a treti prvok, vykona prvy prvok a vlozi vymazane prvky
-  a = zDS()
-  b = zDS()
-  c = zDS()
-  parse(a)
-  doDS(c)
-  doDS(b)
-
-def sip(): #skopiruje druhy prvok, vykona vrchny prvok a vlozi druhy prvok
-  a = zDS()
-  b = zDS()
-  doDS(b)
-  parse(a)
-  doDS(b)
-
-def _sip(): #skopiruje druhy a treti prvok, vykona prvy prvok a vlozi skopirovane prvky
+def _dip():
   a = zDS()
   b = zDS()
   c = zDS()
+  parse(a)
+  doDS(c)
+  doDS(b)
+
+def sip():
+  a = zDS()
+  b = zDS()
+  doDS(b)
+  parse(a)
+  doDS(b)
+
+def _sip():
+  a = zDS()
+  b = zDS()
+  c = zDS()
   doDS(c)
   doDS(b)
   parse(a)
   doDS(c)
   doDS(b)
 
-def sap(): #vykona a a nasledne vykona b
+def sap():
   a = zDS()
   b = zDS()
   parse(a)
   parse(b)
 
-def wrap(): #vlozi vrchny prvok dozatvoriek
+def wrap():
   a = zDS()
   a = '[' + a + ']'
   doDS(a)
 
-def bi(): #vykona b na c a nasledne a na c
+def bi():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -122,7 +122,7 @@ def bi(): #vykona b na c a nasledne a na c
   doDS(c)
   parse(a)
 
-def bi_(): #vykona b na d a nasledne a na c
+def bi_():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -132,7 +132,7 @@ def bi_(): #vykona b na d a nasledne a na c
   doDS(c)
   parse(a)
 
-def _bi(): #vykona a na c a nasledne a na b
+def _bi():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -141,7 +141,7 @@ def _bi(): #vykona a na c a nasledne a na b
   doDS(b)
   parse(a)
 
-def tri(): #vykona c na d, nasledne b na d a nakoniec a na d
+def tri():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -153,7 +153,7 @@ def tri(): #vykona c na d, nasledne b na d a nakoniec a na d
   doDS(d)
   parse(a)
 
-def tri_(): #vykona c na f, nasledne b na e a nakoniec a na d
+def tri_():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -167,7 +167,7 @@ def tri_(): #vykona c na f, nasledne b na e a nakoniec a na d
   doDS(d)
   parse(a)
 
-def _tri(): #vykona a na d, nasledne a na c a nakoniec a na b
+def _tri():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -179,11 +179,11 @@ def _tri(): #vykona a na d, nasledne a na c a nakoniec a na b
   doDS(b)
   parse(a)
 
-def i(): #vykona vrchny prvok
+def i():
   a = zDS()
   parse(a)
 
-def sc(): #vyberie prvky a, b, c, d a vlozi ich v poradi [[d] d], vykona a, vlozi d, vykona b
+def sc():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -193,7 +193,7 @@ def sc(): #vyberie prvky a, b, c, d a vlozi ich v poradi [[d] d], vykona a, vloz
   doDS(d)
   parse(b)
 
-def j(): #vyberie prvky a, b, c, d a vlozi ich v poradi [[c] [d] a][b] a vykona prvok a
+def j():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -202,7 +202,7 @@ def j(): #vyberie prvky a, b, c, d a vlozi ich v poradi [[c] [d] a][b] a vykona 
   doDS(b)
   parse(a)
 
-def jc(): #vyberie prvky a, b, c, d, e a vlozi ich v poradi [[d] a [e] b][c] a vykona prvok b
+def jc():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -212,36 +212,36 @@ def jc(): #vyberie prvky a, b, c, d, e a vlozi ich v poradi [[d] a [e] b][c] a v
   doDS(c)
   parse(b)
 
-def curry(): #pripoji druhy prvok pred prvy v zatvorkach
+def curry():
   a = zDS()
   b = zDS()
   doDS('[' + b + ']' + ' ' + a)
 
-def cons(): #pripoji druhy prvok pred prvy
+def cons():
   a = zDS()
   b = zDS()
   doDS(b + ' ' + a)
 
-def uncons(): #rozdeli prvok na prvu cast a zvysok
+def uncons():
   a = zDS()
   doDS(a)
   first()
   doDS(a)
   rest()
 
-def first(): #vrati prvu cast listu
+def first():
   a = zDS()
   for token in vratToken(a):
     doDS(token)
     break
 
-def last(): #vrati poslednu cast listu
+def last():
   a = zDS()
   for token in vratToken(a):
     pass
   doDS(token)
 
-def rest(): #vrati vsetko okrem prvej casti listu
+def rest():
   a = zDS()
   vysledok = []
   for token in vratToken(a):
@@ -249,42 +249,42 @@ def rest(): #vrati vsetko okrem prvej casti listu
   del vysledok[0]
   doDS(' '.join(vysledok))
 
-def split(): #rozdeli vrchny prvok na samostatne prvky
+def split():
   a = zDS()
   for token in vratToken(a):
     doDS(token)
 
-def grup(): #spoji vsetky prvky v zasobniku do sekvencie
+def grup():
   a = ' '.join(dataStack)
   cleard()
   doDS(a)
 
-def flat(): #odstrani vsetky zatvorky
+def flat():
   a = zDS()
   b = a.replace('[', ' ')
   c = b.replace(']', ' ')
   doDS(c)
   
-def cat(): #pripoji druhy prvok pred prvy bez medzery
+def cat():
   a = zDS()
   b = zDS()
   doDS(b + a)
 
-def size(): #zisti dlzku najvyssieho prvku
+def size():
   a = zDS()
   vysledok = []
   for token in vratToken(a):
     vysledok.append(token)
   doDS(len(vysledok))
 
-def reverse(): #prevrati postupnost v najvyssom prvku
+def reverse():
   a = zDS()
   vysledok = []
   for token in vratToken(a):
     vysledok.append(token)
   doDS(' '.join(reversed(vysledok)))
 
-def add(): #scita dva vrchne prvky
+def add():
   a = zDS()
   b = zDS()
   try:
@@ -294,7 +294,7 @@ def add(): #scita dva vrchne prvky
     raise Vynimka(hlasky[3])
   doDS(b+a)
 
-def sub(): #odcita vrchny prvok od spodneho
+def sub():
   a = zDS()
   b = zDS()
   try:
@@ -304,7 +304,7 @@ def sub(): #odcita vrchny prvok od spodneho
     raise Vynimka(hlasky[3])
   doDS(b-a)
 
-def mul(): #vynasobi dva vrchne prvky
+def mul():
   a = zDS()
   b = zDS()
   try:
@@ -314,7 +314,7 @@ def mul(): #vynasobi dva vrchne prvky
     raise Vynimka(hlasky[3])
   doDS(b*a)
 
-def exp(): #umocni spodny prvok na vrchny
+def exp():
   a = zDS()
   b = zDS()
   try:
@@ -324,7 +324,7 @@ def exp(): #umocni spodny prvok na vrchny
     raise Vynimka(hlasky[3])
   doDS(b**a)
 
-def div(): #vydeli spodny prvok vrchnym
+def div():
   a = zDS()
   b = zDS()
   try:
@@ -334,7 +334,7 @@ def div(): #vydeli spodny prvok vrchnym
     raise Vynimka(hlasky[3])
   doDS(b/a)
 
-def divint(): #celociselne vydeli spodny prvok vrchnym
+def divint():
   a = zDS()
   b = zDS()
   try:
@@ -344,7 +344,7 @@ def divint(): #celociselne vydeli spodny prvok vrchnym
     raise Vynimka(hlasky[3])
   doDS(b//a)
 
-def mod(): #vrati zostatok po celociselnom vydeleni spodneho prvku vrchnym
+def mod():
   a = zDS()
   b = zDS()
   try:
@@ -354,7 +354,7 @@ def mod(): #vrati zostatok po celociselnom vydeleni spodneho prvku vrchnym
     raise Vynimka(hlasky[3])
   doDS(b%a)
 
-def divmod_(): #vrati vysledok a zostatok po celociselnom vydeleni spodneho prvku vrchnym
+def divmod_():
   a = zDS()
   b = zDS()
   try:
@@ -365,7 +365,7 @@ def divmod_(): #vrati vysledok a zostatok po celociselnom vydeleni spodneho prvk
   doDS(b//a)
   doDS(b%a)
 
-def and_(): #logicky sucin
+def and_():
   a = zDS()
   b = zDS()
   if a == 'true':
@@ -385,7 +385,7 @@ def and_(): #logicky sucin
   else:
     doDS('false')
 
-def or_(): #logicky sucet
+def or_():
   a = zDS()
   b = zDS()
   if a == 'true':
@@ -405,7 +405,7 @@ def or_(): #logicky sucet
   else:
     doDS('false')
 
-def xor_(): #logicky exkluzivny sucet
+def xor_():
   a = zDS()
   b = zDS()
   if a == 'true':
@@ -425,7 +425,7 @@ def xor_(): #logicky exkluzivny sucet
   else:
     doDS('false')
 
-def not_(): #logicka negacia
+def not_():
   a = zDS()
   if a == 'true':
     a = True
@@ -438,7 +438,7 @@ def not_(): #logicka negacia
   else:
     doDS('true')
 
-def min_(): #minimum dvoch prvkov
+def min_():
   a = zDS()
   b = zDS()
   try:
@@ -448,7 +448,7 @@ def min_(): #minimum dvoch prvkov
     raise Vynimka(hlasky[3])
   doDS(min(a, b))
 
-def max_(): #maximum dvoch prvkov
+def max_():
   a = zDS()
   b = zDS()
   try:
@@ -458,7 +458,7 @@ def max_(): #maximum dvoch prvkov
     raise Vynimka(hlasky[3])
   doDS(max(a, b))
 
-def abs_(): #absolutna hodnota prvku
+def abs_():
   a = zDS()
   try:
     a = decimal.Decimal(a)
@@ -466,7 +466,7 @@ def abs_(): #absolutna hodnota prvku
     raise Vynimka(hlasky[3])
   doDS(abs(a))
 
-def sign(): #znamienko prvku
+def sign():
   a = zDS()
   try:
     a = decimal.Decimal(a)
@@ -474,7 +474,7 @@ def sign(): #znamienko prvku
     raise Vynimka(hlasky[3])
   doDS((a >= 0) - (a < 0))
     
-def if_(): #porovna piaty a stvrty prvok a ak je piaty mensi vykona treti prvok, ak su rovnake vykona druhy prvok a ak je piaty vacsi vykona prvy prvok
+def if_():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -492,13 +492,13 @@ def if_(): #porovna piaty a stvrty prvok a ak je piaty mensi vykona treti prvok,
   elif e < d:
     parse(c)
 
-def ift(): #ak je druhy prvok pravdivy vykona prvy prvok
+def ift():
   a = zDS()
   b = zDS()
   if b == 'true':
     parse(a)
 
-def ifte(): #ak je treti prvok pravdivy vykona druhy prvok inak vykona prvy prvok
+def ifte():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -507,7 +507,7 @@ def ifte(): #ak je treti prvok pravdivy vykona druhy prvok inak vykona prvy prvo
   else:
     parse(a)
 
-def times(): #vykona druhy prvok dany pocet krat (v prvom prvku)
+def times():
   a = zDS()
   b = zDS()
   try:
@@ -517,7 +517,7 @@ def times(): #vykona druhy prvok dany pocet krat (v prvom prvku)
   for i in range(a):
     parse(b)
 
-def for_(): #cyklus for
+def for_():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -533,7 +533,7 @@ def for_(): #cyklus for
     for i in range(c, b-1, -1):
       parse(a)
 
-def fors(): #cyklus for s urcenim kroku
+def fors():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -551,7 +551,7 @@ def fors(): #cyklus for s urcenim kroku
     for i in range(d, c-1, b):
       parse(a)
 
-def while_(): #ak je druhy prvok pravdivy vykona prvy prvok
+def while_():
   a = zDS()
   b = zDS()
   while True:
@@ -562,7 +562,7 @@ def while_(): #ak je druhy prvok pravdivy vykona prvy prvok
     else:
       break
 
-def rovne(): #vrati true ak su vrchne dva prvky rovne
+def rovne():
   a = zDS()
   b = zDS()
   try:
@@ -575,7 +575,7 @@ def rovne(): #vrati true ak su vrchne dva prvky rovne
   else:
     doDS('false')
 
-def nerovne(): #vrati true ak su vrchne dva prvky nerovne
+def nerovne():
   a = zDS()
   b = zDS()
   try:
@@ -588,7 +588,7 @@ def nerovne(): #vrati true ak su vrchne dva prvky nerovne
   else:
     doDS('false')
 
-def vacsie(): #vrati true ak spodny prvok je vacsi ako vrchny
+def vacsie():
   a = zDS()
   b = zDS()
   try:
@@ -601,7 +601,7 @@ def vacsie(): #vrati true ak spodny prvok je vacsi ako vrchny
   else:
     doDS('false')
 
-def mensie(): #vrati true ak spodny prvok je mensi ako vrchny
+def mensie():
   a = zDS()
   b = zDS()
   try:
@@ -614,7 +614,7 @@ def mensie(): #vrati true ak spodny prvok je mensi ako vrchny
   else:
     doDS('false')
 
-def vacsierovne(): #vrati true ak spodny prvok je vacsi alebo rovny ako vrchny
+def vacsierovne():
   a = zDS()
   b = zDS()
   try:
@@ -627,7 +627,7 @@ def vacsierovne(): #vrati true ak spodny prvok je vacsi alebo rovny ako vrchny
   else:
     doDS('false')
 
-def mensierovne(): #vrati true ak spodny prvok je mensi alebo rovny ako vrchny
+def mensierovne():
   a = zDS()
   b = zDS()
   try:
@@ -640,7 +640,7 @@ def mensierovne(): #vrati true ak spodny prvok je mensi alebo rovny ako vrchny
   else:
     doDS('false')
 
-def list_(): #vytvori postupnost cisel od b po a
+def list_():
   a = zDS()
   b = zDS()
   try:
@@ -653,7 +653,7 @@ def list_(): #vytvori postupnost cisel od b po a
     c.append(str(i))
   doDS(' '.join(c))
 
-def infra_old(): #vykona prvok a na prvku b, ktory berie ako zasobnik
+def infra_old():
   global dataStack, helpStack
   a = zDS()
   b = zDS()
@@ -689,7 +689,7 @@ def infra():
   split()
   doDS(d)  
 
-def map_(): #aplikuje funkciu v a na vsetky prvky v b
+def map_():
   a = zDS()
   b = zDS()
   vysledok = []
@@ -699,7 +699,7 @@ def map_(): #aplikuje funkciu v a na vsetky prvky v b
     vysledok.append(zDS())
   doDS(' '.join(vysledok))
 
-def foldl(): #aplikuje funkciu v a na prvky v c postupne z lava, zaciatocna hodnota je v b
+def foldl():
   a = zDS()
   b = zDS()
   c = zDS()
@@ -708,7 +708,7 @@ def foldl(): #aplikuje funkciu v a na prvky v c postupne z lava, zaciatocna hodn
     doDS(token)
     parse(a)
 
-def foldr(): #aplikuje funkciu v a na prvky v c postupne z prava, zaciatocna hodnota je v b
+def foldr():
   a = zDS()
   b = zDS()
   reverse()
@@ -719,7 +719,7 @@ def foldr(): #aplikuje funkciu v a na prvky v c postupne z prava, zaciatocna hod
     doDS(token)
     parse(a)
 
-def filter_(): #vytvori postupnost z prvkov v b ak splnaju podmienku v A
+def filter_():
   a = zDS()
   b = zDS()
   vysledok = []
@@ -730,84 +730,84 @@ def filter_(): #vytvori postupnost z prvkov v b ak splnaju podmienku v A
       vysledok.append(token)
   doDS(' '.join(vysledok))
 
-def import_(): #importuje prikazy z externeho suboru
+def import_():
   global namespace
   a = zDS()
   namespace = a
   a = a + '.cmr'
   source = ''
   try:
-    s = open(a, encoding='utf-8') #otvori subor na citanie
+    s = open(a, encoding='utf-8')
     try:
-      source = s.read() #nacita subor
+      source = s.read()
     finally:
-      s.close() #zatvori subor
+      s.close()
   except IOError as e:
     raise Vynimka(hlasky[7]) 
-  if source: #ak bol nacitany subor
+  if source:
     parse(source)
   namespace = None
 
-def define(): #zadefinuje novu funkciu v userDictionary alebo funkciu vymaze
+def define():
   global userDictionary
   a = zDS()
-  if namespace: #ak je to definicia funkcie z nejakeho namespace, predpojim nazov toho namespace pred nazov funkcie
+  if namespace:
     a = namespace + '.' + a
   b = zDS()
   if b:
     if a in userDictionary:
-      userDictionary[a].append(b) #prida nove telo na koniec listu
+      userDictionary[a].append(b)
     else:
-      userDictionary[a] = [b] #vytvori novy list
+      userDictionary[a] = [b]
   else:
     if a in userDictionary:
       if len(userDictionary[a]) > 1:
-        del userDictionary[a][-1] #vymaze naposledy pridane telo funkcie
+        del userDictionary[a][-1]
       else:
         del userDictionary[a]
 
-def show(): #vrati vnutro funkcie v userDictionary
+def show():
   a = zDS()
   if a in userDictionary:
     doDS(userDictionary[a])
   elif a in sysDictionary:
     doDS(sysDictionary[a])
 
-def exist(): #zisti, ci funkcia s danym menom existuje v nejakom slovniku
+def exist():
   a = zDS()
   if a in userDictionary or a in sysDictionary or a in coreDictionary:
     doDS('true')
   else:
     doDS('false')
 
-def empty(): #zisti, ci je zasobnik prazdny
+def empty():
   a = len(dataStack)
   if a == 0:
     doDS('true')
   else:
     doDS('false')
 
-def cleard(): #vymaze dataStack
+def cleard():
   global dataStack
   dataStack = []
 
-def clearh(): #vymaze helpStack
+def clearh():
   global helpStack
   helpStack = []
 
-def del_(): #reinicializuje uzivatelsky slovnik
+def del_():
   global userDictionary
   userDictionary = copy.deepcopy(userDictionary_orig)
 
-def height(): #zisti hlbku zasobnika dataStack
+def height():
   l = len(dataStack)
   doDS(str(l))
 
-def print_(): #vypise vrchny prvok v zasobniku dataStack na obrazovku bez noveho riadku
+def print_():
   a = zDS()
   print(a, end='')
 
-def read(): #nacita prvok z klavesnice
+def read():
   text = zDS()
   doDS(input(text))
 
@@ -941,28 +941,28 @@ def vratToken(retazec):
 
   retazec = retazec.strip()
 
-  if retazec == '': #je to prazdny token?
+  if retazec == '':
     return
-  for znak in retazec: #pre kazdy znak v retazci
-    if znak == '[' and not apostrofy and not komentar: #je to otvaracia zatvorka mimo uvodzoviek a komentara?
-      zatvoriek += 1 #poznaci si otvaraciu zatvorku
-      if zatvoriek == 1 and len(token) > 0: #je to otvaracia zatvorka pre nasledujuci token?
+  for znak in retazec:
+    if znak == '[' and not apostrofy and not komentar:
+      zatvoriek += 1
+      if zatvoriek == 1 and len(token) > 0:
         yield token
         token = ''
       token += znak
 
-    elif znak == ']' and not apostrofy and not komentar: #je to uzatvaracia zatvorka mimo uvodzoviek a komentara?
+    elif znak == ']' and not apostrofy and not komentar:
       zatvoriek -= 1
       token += znak
-      if zatvoriek == 0: #je to ukoncovacia zatvorka aktualneho tokenu?
+      if zatvoriek == 0:
         yield token
         token = ''
       elif zatvoriek < 0:
-        raise Vynimka(hlasky[5]) #Vynimka poctu zatvoriek
+        raise Vynimka(hlasky[5])
 
-    elif znak == "'" and zatvoriek == 0 and not komentar: #je to zaciatok alebo koniec viacslovneho retazca mimo zatvoriek a komentara
+    elif znak == "'" and zatvoriek == 0 and not komentar:
       apostrofy = not apostrofy
-      if apostrofy and len(token) > 0: #je to otvaracia uvodzovka pre nasledujuci token?
+      if apostrofy and len(token) > 0:
         yield token
         token = ''
       token += znak
@@ -970,16 +970,16 @@ def vratToken(retazec):
         yield token
         token = ''
 
-    elif znak.isspace() and zatvoriek == 0 and not apostrofy and not komentar: #je to prazdny znak mimo zatvoriek, uvodzoviek a komentara?
-      if len(token) > 0: #je uz nieco v tokene?
+    elif znak.isspace() and zatvoriek == 0 and not apostrofy and not komentar:
+      if len(token) > 0:
         yield token
         token = ''
 
-    elif znak == '#' or (znak == '\n' and komentar): # je to znak zacinajuci komentar alebo znak konca riadku v komentari XXX: and zatvoriek == 0 and not apostrofy: #je to znak zacinajuci komentar mimo zatvoriek a uvodzoviek?
+    elif znak == '#' or (znak == '\n' and komentar): # XXX: and zatvoriek == 0 and not apostrofy:
       komentar = not komentar
 
-    else: #je to iny token ako zatvorky, apostrofy, prazdny znak alebo komentar?
-      if not komentar: #je to znak mimo komentara?
+    else:
+      if not komentar:
         token += znak
   else:
     if len(token) > 0:
@@ -989,17 +989,17 @@ def parse(retazec):
   for token in vratToken(retazec):
     print('d:', dataStack)
     print('t:', token)
-    if token in userDictionary: #je token v userDictionary?
+    if token in userDictionary:
       parse(userDictionary[token][-1])
-    elif token in sysDictionary: #je token v sysDictionary?
+    elif token in sysDictionary:
       parse(sysDictionary[token])
-    elif token in coreDictionary: #je token v coreDictionary?
+    elif token in coreDictionary:
       coreDictionary[token]()
-    elif token[0] == '[' and token[-1] == ']': #je token v zatvorkach?
+    elif token[0] == '[' and token[-1] == ']':
       doDS(token[1:-1])
-    elif token[0] == '"' and token[-1] == '"': #je token v uvodzovkach?
+    elif token[0] == '"' and token[-1] == '"':
       doDS(token[1:-1])
-    else: #je to nieco ine
+    else:
       doDS(token)
 
 def run(subor):
@@ -1009,14 +1009,14 @@ def run(subor):
     return
   source = ''
   try:
-    s = open(subor, encoding='utf-8') #otvori subor na citanie
+    s = open(subor, encoding='utf-8')
     try:
-      source = s.read() #nacita subor
+      source = s.read()
     finally:
-      s.close() #zatvori subor
+      s.close()
   except IOError as e:
     source = subor
-  if source: #ak bol nacitany subor
+  if source:
     dataStack = []
     helpStack = []
     try:
