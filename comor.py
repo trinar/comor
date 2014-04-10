@@ -9,14 +9,14 @@ from vynimky import Vynimka
 dataStack = None
 helpStack = None
 namespace = None
-hlasky = ['\nVynimka v programe!',
-          '\nZásobník dataStack je prázdny!',
-          '\nZásobník helpStack je prázdny!',
-          '\nZlý formát prvku v dataStack!',
-          '\nIndex mimo rozsah vstupného reťazca!',
-          '\nNesprávny počet zátvoriek!',
-          '\nNesprávny počet apostrofov!',
-          '\nSúbor nenájdený!']
+hlasky = ['\nGeneral exception',
+          '\nDataStack is empty!',
+          '\nHelpStack is empty!',
+          '\nMalformated item in dataStack!',
+          '\nIndex out of range!',
+          '\nWrong number of brackets!',
+          '\nWrong number of apostrophes!',
+          '\nFile not found!']
 
 def zDS():
   global dataStack
