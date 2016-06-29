@@ -906,7 +906,7 @@ def parse(retazec):
       coreDictionary[token]()
     elif token[0] == '[' and token[-1] == ']': #je token v zatvorkach?
       doDS(token[1:-1])
-    elif token[0] == '"' and token[-1] == "'": #je token v uvodzovkach?
+    elif token[0] == '"' and token[-1] == '"': #je token v uvodzovkach?
       doDS(token[1:-1])
     else: #je to nieco ine
       doDS(token)
