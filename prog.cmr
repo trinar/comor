@@ -3,4 +3,4 @@
 [ako] [c] def
 [sa] [d] def
 [mas] [e] def
-[a b c d e] [i] map printn
+[a b c d e] [i] map println
