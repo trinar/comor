@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 '''emulator pre programovaci jazyk comor'''
+
 import os
 import decimal
 import copy
-from vynimky import Vynimka
 
 dataStack = []
 helpStack = []
@@ -14,9 +14,7 @@ hlasky = ['Vynimka v programe!\n',
           'Zásobník dataStack je prázdny!\n',
           'Zásobník helpStack je prázdny!\n',
           'Zlý formát prvku v dataStack!\n',
-          'Index mimo rozsah vstupného reťazca!\n',
           'Nesprávny počet zátvoriek!\n',
-          'Nesprávny počet apostrofov!\n',
           'Súbor nenájdený!'] #chybove hlasky
 
 def zDS():
@@ -24,7 +22,7 @@ def zDS():
   try:
     x = dataStack.pop()
   except IndexError:
-    raise Vynimka('DS: ' + hlasky[1])
+    raise IndexError('DS: ' + hlasky[1])
   return x
 
 def doDS(x):
@@ -36,7 +34,7 @@ def zHS():
   try:
     x = helpStack.pop()
   except IndexError:
-    raise Vynimka('HS: ' + hlasky[2])
+    raise IndexError('HS: ' + hlasky[2])
   return x
 
 def doHS(x):
@@ -207,8 +205,8 @@ def add():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('add: ' + hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('add: ' + hlasky[3])
   doDS(b+a)
 
 def sub():
@@ -218,8 +216,8 @@ def sub():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('sub: ' + hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('sub: ' + hlasky[3])
   doDS(b-a)
 
 def mul():
@@ -229,8 +227,8 @@ def mul():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('mul: ' + hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('mul: ' + hlasky[3])
   doDS(b*a)
 
 def exp():
@@ -240,8 +238,8 @@ def exp():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('exp: ' + hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('exp: ' + hlasky[3])
   doDS(b**a)
 
 def div():
@@ -251,8 +249,8 @@ def div():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('div: ' + hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('div: ' + hlasky[3])
   doDS(b/a)
 
 def divint():
@@ -262,8 +260,8 @@ def divint():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('divint: ' + hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('divint: ' + hlasky[3])
   doDS(b//a)
 
 def mod():
@@ -273,8 +271,8 @@ def mod():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('mod: ' + hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('mod: ' + hlasky[3])
   doDS(b%a)
 
 def divmod_():
@@ -284,8 +282,8 @@ def divmod_():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka(hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('divmod:' + hlasky[3])
   doDS(b//a)
   doDS(b%a)
 
@@ -293,78 +291,66 @@ def and_():
   '''logicky sucin'''
   a = zDS()
   b = zDS()
-  if a == 'true':
+  if a == 'True':
     a = True
-  elif a == 'false':
+  elif a == 'False':
     a = False
   else:
-    raise Vynimka('and: ' + hlasky[3])
-  if b == 'true':
+    raise ValueError('and: ' + hlasky[3])
+  if b == 'True':
     b = True
-  elif b == 'false':
+  elif b == 'False':
     b = False
   else:
-    raise Vynimka('and: ' + hlasky[3])
-  if a and b:
-    doDS('true')
-  else:
-    doDS('false')
+    raise ValueError('and: ' + hlasky[3])
+  doDS(a and b)
 
 def or_():
   '''logicky sucet'''
   a = zDS()
   b = zDS()
-  if a == 'true':
+  if a == 'True':
     a = True
-  elif a == 'false':
+  elif a == 'False':
     a = False
   else:
-    raise Vynimka('or: ' + hlasky[3])
-  if b == 'true':
+    raise ValueError('or: ' + hlasky[3])
+  if b == 'True':
     b = True
-  elif b == 'false':
+  elif b == 'False':
     b = False
   else:
-    raise Vynimka('or: ' + hlasky[3])
-  if a or b:
-    doDS('true')
-  else:
-    doDS('false')
+    raise ValueError('or: ' + hlasky[3])
+  doDS(a or b)
 
 def xor_():
   '''logicky exkluzivny sucet'''
   a = zDS()
   b = zDS()
-  if a == 'true':
+  if a == 'True':
     a = True
-  elif a == 'false':
+  elif a == 'False':
     a = False
   else:
-    raise Vynimka('xor: ' + hlasky[3])
-  if b == 'true':
+    raise ValueError('xor: ' + hlasky[3])
+  if b == 'True':
     b = True
-  elif b == 'false':
+  elif b == 'False':
     b = False
   else:
-    raise Vynimka('xor: ' + hlasky[3])
-  if a != b:
-    doDS('true')
-  else:
-    doDS('false')
+    raise ValueError('xor: ' + hlasky[3])
+  doDS(a ^ b)
 
 def not_():
   '''logicka negacia'''
   a = zDS()
-  if a == 'true':
+  if a == 'True':
     a = True
-  elif a == 'false':
+  elif a == 'False':
     a = False
   else:
-    raise Vynimka('not: ' + hlasky[3])
-  if a:
-    doDS('false')
-  else:
-    doDS('true')
+    raise ValueError('not: ' + hlasky[3])
+  doDS(not a)
 
 def min_():
   '''minimum dvoch prvkov'''
@@ -373,8 +359,8 @@ def min_():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('min: ' + hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('min: ' + hlasky[3])
   doDS(min(a, b))
 
 def max_():
@@ -384,8 +370,8 @@ def max_():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('max: ' + hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('max: ' + hlasky[3])
   doDS(max(a, b))
 
 def abs_():
@@ -393,8 +379,8 @@ def abs_():
   a = zDS()
   try:
     a = decimal.Decimal(a)
-  except:
-    raise Vynimka('abs: ' + hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('abs: ' + hlasky[3])
   doDS(abs(a))
 
 def sign():
@@ -402,8 +388,8 @@ def sign():
   a = zDS()
   try:
     a = decimal.Decimal(a)
-  except:
-    raise Vynimka('sign: ' + hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('sign: ' + hlasky[3])
   doDS((a >= 0) - (a < 0))
 
 def if_():
@@ -416,8 +402,8 @@ def if_():
   try:
     d = decimal.Decimal(d)
     e = decimal.Decimal(e)
-  except:
-    raise Vynimka('if: ' + hlasky[3])
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('if: ' + hlasky[3])
   if e > d:
     parse(a)
   elif e == d:
@@ -429,7 +415,7 @@ def ift():
   '''ak je druhy prvok pravdivy vykona prvy prvok'''
   a = zDS()
   b = zDS()
-  if b == 'true':
+  if b == 'True':
     parse(a)
 
 def ifte():
@@ -437,7 +423,7 @@ def ifte():
   a = zDS()
   b = zDS()
   c = zDS()
-  if c == 'true':
+  if c == 'True':
     parse(b)
   else:
     parse(a)
@@ -448,8 +434,8 @@ def times():
   b = zDS()
   try:
     a = int(a)
-  except:
-    raise Vynimka('times: ' + hlasky[3])
+  except ValueError:
+    raise ValueError('times: ' + hlasky[3])
   for _ in range(a):
     parse(b)
 
@@ -461,8 +447,8 @@ def for_():
   try:
     b = int(b)
     c = int(c)
-  except:
-    raise Vynimka('for: ' + hlasky[3])
+  except ValueError:
+    raise ValueError('for: ' + hlasky[3])
   if b > c:
     for _ in range(c, b+1):
       parse(a)
@@ -480,8 +466,8 @@ def fors():
     b = int(b)
     c = int(c)
     d = int(d)
-  except:
-    raise Vynimka('fors: ' + hlasky[3])
+  except ValueError:
+    raise ValueError('fors: ' + hlasky[3])
   if c > d:
     for _ in range(d, c+1, b):
       parse(a)
@@ -496,24 +482,21 @@ def while_():
   while True:
     parse(b)
     c = zDS()
-    if c == 'true':
+    if c == 'True':
       parse(a)
     else:
       break
 
 def rovne():
-  '''vrati true ak su vrchne dva prvky rovne'''
+  '''vrati True ak su vrchne dva prvky rovne'''
   a = zDS()
   b = zDS()
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('=: ' + hlasky[3])
-  if a == b:
-    doDS('true')
-  else:
-    doDS('false')
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('=: ' + hlasky[3])
+  doDS(a == b)
 
 def nerovne():
   '''vrati true ak su vrchne dva prvky nerovne'''
@@ -522,12 +505,9 @@ def nerovne():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('!=: ' + hlasky[3])
-  if a != b:
-    doDS('true')
-  else:
-    doDS('false')
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('!=: ' + hlasky[3])
+  doDS(a != b)
 
 def vacsie():
   '''vrati true ak spodny prvok je vacsi ako vrchny'''
@@ -536,12 +516,9 @@ def vacsie():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('>: ' + hlasky[3])
-  if b > a:
-    doDS('true')
-  else:
-    doDS('false')
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('>: ' + hlasky[3])
+  doDS(b > a)
 
 def mensie():
   '''vrati true ak spodny prvok je mensi ako vrchny'''
@@ -550,12 +527,9 @@ def mensie():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('<: ' + hlasky[3])
-  if b < a:
-    doDS('true')
-  else:
-    doDS('false')
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('<: ' + hlasky[3])
+  doDS(b < a)
 
 def vacsierovne():
   '''vrati true ak spodny prvok je vacsi alebo rovny ako vrchny'''
@@ -564,12 +538,9 @@ def vacsierovne():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('>=: ' + hlasky[3])
-  if b >= a:
-    doDS('true')
-  else:
-    doDS('false')
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('>=: ' + hlasky[3])
+  doDS(b >= a)
 
 def mensierovne():
   '''vrati true ak spodny prvok je mensi alebo rovny ako vrchny'''
@@ -578,12 +549,9 @@ def mensierovne():
   try:
     a = decimal.Decimal(a)
     b = decimal.Decimal(b)
-  except:
-    raise Vynimka('<=: ' + hlasky[3])
-  if b <= a:
-    doDS('true')
-  else:
-    doDS('false')
+  except decimal.InvalidOperation:
+    raise decimal.InvalidOperation('<=: ' + hlasky[3])
+  doDS(b <= a)
 
 def list_():
   '''vytvori postupnost cisel od b po a'''
@@ -592,8 +560,8 @@ def list_():
   try:
     a = int(a)
     b = int(b)
-  except:
-    raise Vynimka('list: ' + hlasky[3])
+  except ValueError:
+    raise ValueError('list: ' + hlasky[3])
   c = []
   for tmp in range(b, a+1):
     c.append(str(tmp))
@@ -654,7 +622,7 @@ def filter_():
   for token in vratToken(b):
     doDS(token)
     parse(a)
-    if zDS() == 'true':
+    if zDS() == 'True':
       vysledok.append(token)
   doDS(' '.join(vysledok))
 
@@ -669,7 +637,7 @@ def import_():
     with open(subor, encoding='utf-8') as s: #otvori subor na citanie
       source = s.read() #nacita subor
   except IOError:
-    raise Vynimka('import: ' + hlasky[7])
+    raise IOError('import: ' + hlasky[5])
   if source: #ak bol nacitany subor
     parse(source)
 
@@ -700,18 +668,16 @@ def show():
 def exist():
   '''zisti, ci funkcia s danym menom existuje v nejakom slovniku'''
   a = zDS()
-  if a in userDictionary or a in _sysDictionary or a in _coreDictionary:
-    doDS('true')
-  else:
-    doDS('false')
+  doDS(a in userDictionary or a in _sysDictionary or a in _coreDictionary)
 
-def empty():
-  '''zisti, ci je zasobnik prazdny'''
-  a = len(dataStack)
-  if a == 0:
-    doDS('true')
-  else:
-    doDS('false')
+
+def emptyd():
+  '''zisti, ci je dataStack prazdny'''
+  doDS(dataStack == [])
+
+def emptyh():
+  '''zisti, ci je helpStack prazdny'''
+  doDS(helpStack == [])
 
 def cleard():
   '''vymaze dataStack'''
@@ -734,8 +700,7 @@ def reset(self):
 
 def height():
   '''zisti hlbku zasobnika dataStack'''
-  l = len(dataStack)
-  doDS(str(l))
+  doDS(len(dataStack))
 
 def print_():
   '''vypise vrchny prvok v zasobniku dataStack na obrazovku bez noveho riadku'''
@@ -795,7 +760,8 @@ _coreDictionary = {
   'exist':exist, #ak funkcia a existuje v nejakom slovniku vrati true, inak vrati false
   'print':print_, #vypise na obrazovku vrchny prvok
   'read':read, #nacita prvok z klavesnice
-  'empty':empty, #zisti, ci je zasobnik prazdny
+  'emptyd':emptyd, #zisti, ci je dataStack prazdny
+  'emptyh':emptyh, #zisti, ci je helpStack prazdny
   'cleard':cleard, #vyprazdni dataStack
   'clearh':clearh, #vyprazdni helpStack
   'height':height, #zisti hlbku zasobnika
@@ -894,8 +860,6 @@ def vratToken(retazec):
 
   retazec = retazec.strip()
 
-  if retazec == '': #je to prazdny token?
-    return
   for znak in retazec: #pre kazdy znak v retazci
     if znak == '[' and not komentar: #je to otvaracia zatvorka mimo komentara?
       zatvoriek += 1 #poznaci si otvaraciu zatvorku
@@ -911,10 +875,10 @@ def vratToken(retazec):
         yield token
         token = ''
       elif zatvoriek < 0:
-        raise Vynimka(']: ' + hlasky[5]) #Vynimka poctu zatvoriek
+        raise SyntaxError(']: ' + hlasky[4]) #Vynimka poctu zatvoriek
 
     elif znak.isspace() and zatvoriek == 0 and not komentar: #je to prazdny znak mimo zatvoriek a komentara?
-      if len(token) > 0: #je uz nieco v tokene?
+      if token: #je uz nieco v tokene?
         yield token
         token = ''
 
@@ -925,7 +889,7 @@ def vratToken(retazec):
       if not komentar: #je to znak mimo komentara?
         token += znak
   else:
-    if len(token) > 0:
+    if token:
       yield token
 
 def parse(retazec):
@@ -956,12 +920,12 @@ def run(subor):
       source = s.read() #nacita subor
     finally:
       s.close() #zatvori subor
-  except IOError as e:
+  except IOError:
     source = subor
   if source: #ak bol nacitany subor
     try:
       parse(source)
-    except Vynimka as e:
+    except Exception as e:
       print(e)
 
 def status():
