@@ -1,11 +1,11 @@
 #faktorial
-[dup 1 <= [drop 1] [dup 1 - fact1 *] ifte] [fact1] def
+[dup 1 <= [] [dup 1 - fact1 *] ifte] [fact1] def
 
-[[1 1] dip [dup [*] dip 1 +] swap times drop] [fact2] def
+[[1 1] dip [dup [*] dip 1 +] times drop] [fact2] def
 
-[[mov dup 1 <= [rem drop drop 1] [rem [dup 1 -] dip i *] ifte] y] [fact3] def
+[[mov dup 1 <= [rem 2drop 1] [rem [dup 1 -] dip i *] ifte] y] [fact3] def
 
-[[[dup 1 <=] dip swap [drop drop 1] [[dup 1 -] dip i *] ifte] y] [fact4] def
+[[[dup 1 <=] dip swap [2drop 1] [[dup 1 -] dip i *] ifte] y] [fact4] def
 
 #fibonacci
 [dup 2 < [] [dup 1 - fibo1 swap 2 - fibo1 +] ifte] [fibo1] def
@@ -18,15 +18,15 @@
 
 [0 1 rold [dup [+] dip swap] times drop] [fibo5] def
 
-#GCD
-[dup 0 = [drop] [swap over % gcd1] ifte] [gcd1] def
+#najvacsi spolocny delitel
+[dup 0 = [drop] [burry % gcd1] ifte] [gcd1] def
 
-[[[dup 0 =] dip swap [drop drop] [[swap over %] dip i] ifte] y] [gcd2] def
+[[[dup 0 =] dip swap [2drop] [[burry %] dip i] ifte] y] [gcd2] def
 
-#LCM
+#najmensi spolocny nasobitel
 [over over gcd [* abs] dip //] [lcm1] def
 
-#triangle number
+#trojuholnikove cislo
 [dup [1 +] dip * 2 /] [trin1] def
 
 [[[dup 0 =] dip swap [drop] [[dup 1 -] dip i +] ifte] y] [trin2] def

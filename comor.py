@@ -429,7 +429,7 @@ def ifte():
     parse(a)
 
 def times():
-  '''vykona druhy prvok dany pocet krat (v prvom prvku)'''
+  '''vykona prvy prvok dany pocet krat (v druhom prvku)'''
   a = zDS()
   b = zDS()
   try:
@@ -692,11 +692,11 @@ def del_():
   userDictionary.clear()
   userDictionary.update(copy.deepcopy(_userDictionary_orig))
 
-def reset(self):
+def reset():
   '''uvedie program do pociatocneho stavu'''
-  self.cleard()
-  self.clearh()
-  self.del_()
+  cleard()
+  clearh()
+  del_()
 
 def height():
   '''zisti hlbku zasobnika dataStack'''
@@ -713,141 +713,142 @@ def read():
   doDS(input(text))
 
 _coreDictionary = {
-  'mov':mov, #presunie vrchny prvok v dataStack na vrch helpStack
-  'rem':rem, #presunie vrchny prvok v helpStack na vrch dataStack
-  'dup':dup, #duplikuje vrchny prvok
-  'swap':swap, #vymeni dva vrchne prvky
-  'drop':drop, #vymaze vrchny prvok
-  'over':over, #skopiruje druhy prvok na vrch
-  'wrap':wrap, #zabali vrchny prvok do zatvoriek
-  'i':i,
-  's\'':sc,
-  'j':j,
-  'j\'':jc,
-  'cons':cons, #pripoji vrchny prvok na koniec sekvencie
-  'uncons':uncons, #rozlozi vrchnu sekvenciu na first a rest
-  'first':first, #vrati prvy prvok v sekvencii najvyssieho prvku
-  'last':last, #vrati posledny prvok v sekvencii najvyssieho prvku
-  'rest':rest, #vrati vsetky prvky v sekvencii okrem prveho prvku v najvyssom prvku
-  'split':split, #rozdeli vrchny prvok na viacero prvkov
-  'grup':grup, #spoji vsetky prvky v zasobniku do sekvencie
-  'flat':flat, #odstrani vsetky zatvorky z vrchneho prvku
-  'cat':cat, #spoji dva vrchne prvky bez medzery
-  'len':len_, #vrati pocet prvkov v sekvencii v najvyssom prvku
-  'reverse':reverse, #prevrati postupnost prvkov vo vrchnej sekvencii
-  '+':add,
-  '-':sub,
-  '*':mul,
-  '**':exp,
-  '/':div,
-  '//':divint,
-  '%':mod,
-  '/%':divmod_,
-  'and':and_,
-  'or':or_,
-  'not':not_,
-  'xor':xor_,
-  'min':min_,
-  'max':max_,
-  'abs':abs_,
-  'sign':sign,
-  'map':map_, #aplikuje funkciu a na kazdy prvok v b
-  'foldl':foldl, #aplikuje binarnu funkciu a postupne na vsetky prvky v b z lava
-  'foldr':foldr, #aplikuje binarnu funkciu a postupne na vsetky prvky v b z prava
-  'filter':filter_, #vytvori sekvenciu z prvkov b ak splnaju podmienku v a
-  'import':import_, #importuje slovnik funkcii s nazvom v najvyssom prvku (subor bez koncovky .cmr)
-  'del':del_, #vymaze uzivatelsky slovnik funkcii
-  'exist':exist, #ak funkcia a existuje v nejakom slovniku vrati true, inak vrati false
-  'print':print_, #vypise na obrazovku vrchny prvok
-  'read':read, #nacita prvok z klavesnice
-  'emptyd':emptyd, #zisti, ci je dataStack prazdny
-  'emptyh':emptyh, #zisti, ci je helpStack prazdny
-  'cleard':cleard, #vyprazdni dataStack
-  'clearh':clearh, #vyprazdni helpStack
-  'height':height, #zisti hlbku zasobnika
-  'list':list_, #vytvori sekvenciu cisel od n1 po n2 (vratane krajnych hodnot)
-  'infra':infra, #vykona funkciu tak, ze za zasobnik povazuje sekvenciu b
-  'show':show, #vratenie vnutrajska funkcie
-  '=':rovne,
-  '!=':nerovne,
-  '<':mensie,
-  '>':vacsie,
-  '<=':mensierovne,
-  '>=':vacsierovne,
-  'def':define, #vytvori podprogram
-  'if':if_, #porovna dva prvky v dataStack a vykona patricnu operaciu [<][=][>]
-  'ift':ift, #vykona podprogram, ak hodnota bude true
-  'ifte':ifte, #vykona podprogram1, ak je hodnota true, inak vykona podprogram2
-  'while':while_, #vykona podprogram, kym je podmienka true
-  'times':times, #vykona podprogram zadany pocet krat
-  'for':for_, #vykona podprogam stop-start krat
-  'fors':fors #vykona podprogam od start po stop po krokoch
+  'mov': mov, #presunie vrchny prvok v dataStack na vrch helpStack
+  'rem': rem, #presunie vrchny prvok v helpStack na vrch dataStack
+  'dup': dup, #duplikuje vrchny prvok
+  'swap': swap, #vymeni dva vrchne prvky
+  'drop': drop, #vymaze vrchny prvok
+  'over': over, #skopiruje druhy prvok na vrch
+  'wrap': wrap, #zabali vrchny prvok do zatvoriek
+  'i': i,
+  's\'': sc,
+  'j': j,
+  'j\'': jc,
+  'cons': cons, #pripoji vrchny prvok na koniec sekvencie
+  'uncons': uncons, #rozlozi vrchnu sekvenciu na first a rest
+  'first': first, #vrati prvy prvok v sekvencii najvyssieho prvku
+  'last': last, #vrati posledny prvok v sekvencii najvyssieho prvku
+  'rest': rest, #vrati vsetky prvky v sekvencii okrem prveho prvku v najvyssom prvku
+  'split': split, #rozdeli vrchny prvok na viacero prvkov
+  'grup': grup, #spoji vsetky prvky v zasobniku do sekvencie
+  'flat': flat, #odstrani vsetky zatvorky z vrchneho prvku
+  'cat': cat, #spoji dva vrchne prvky bez medzery
+  'len': len_, #vrati pocet prvkov v sekvencii v najvyssom prvku
+  'reverse': reverse, #prevrati postupnost prvkov vo vrchnej sekvencii
+  '+': add,
+  '-': sub,
+  '*': mul,
+  '**': exp,
+  '/': div,
+  '//': divint,
+  '%': mod,
+  '/%': divmod_,
+  'and': and_,
+  'or': or_,
+  'not': not_,
+  'xor': xor_,
+  'min': min_,
+  'max': max_,
+  'abs': abs_,
+  'sign': sign,
+  'map': map_, #aplikuje funkciu a na kazdy prvok v b
+  'foldl': foldl, #aplikuje binarnu funkciu a postupne na vsetky prvky v b z lava
+  'foldr': foldr, #aplikuje binarnu funkciu a postupne na vsetky prvky v b z prava
+  'filter': filter_, #vytvori sekvenciu z prvkov b ak splnaju podmienku v a
+  'import': import_, #importuje slovnik funkcii s nazvom v najvyssom prvku (subor bez koncovky .cmr)
+  'del': del_, #resetne uzivatelsky slovnik funkcii
+  'reset': reset, #vyprazdni zasobniky a resetne uzivatelsky slovnik funkcii
+  'exist': exist, #ak funkcia a existuje v nejakom slovniku vrati true, inak vrati false
+  'print': print_, #vypise na obrazovku vrchny prvok
+  'read': read, #nacita prvok z klavesnice
+  'emptyd': emptyd, #zisti, ci je dataStack prazdny
+  'emptyh': emptyh, #zisti, ci je helpStack prazdny
+  'cleard': cleard, #vyprazdni dataStack
+  'clearh': clearh, #vyprazdni helpStack
+  'height': height, #zisti hlbku zasobnika
+  'list': list_, #vytvori sekvenciu cisel od n1 po n2 (vratane krajnych hodnot)
+  'infra': infra, #vykona funkciu tak, ze za zasobnik povazuje sekvenciu b
+  'show': show, #vratenie vnutrajska funkcie
+  '=': rovne,
+  '!=': nerovne,
+  '<': mensie,
+  '>': vacsie,
+  '<=': mensierovne,
+  '>=': vacsierovne,
+  'def': define, #vytvori podprogram
+  'if': if_, #porovna dva prvky v dataStack a vykona patricnu operaciu [<][=][>]
+  'ift': ift, #vykona podprogram, ak hodnota bude true
+  'ifte': ifte, #vykona podprogram1, ak je hodnota true, inak vykona podprogram2
+  'while': while_, #vykona podprogram, kym je podmienka true
+  'times': times, #vykona podprogram zadany pocet krat
+  'for': for_, #vykona podprogam stop-start krat
+  'fors': fors #vykona podprogam od start po stop po krokoch
 }
 
 _sysDictionary = {
-  'dup2':'[dup] dip', #zduplikuje druhy najvyssi prvok
-  '2dup':'[dup] dip dup [swap] dip', #zduplikuje vrchne dva prvky
-  'swap2':'[swap] dip', #vymeni druhy a treti prvok
-  '2swap':'[swap] dip swap [[swap] dip swap] dip', #vymeni treti a stvrty prvok s prvym a druhym prvkom
-  'drop2':'[drop] dip', #vymaze druhy najvyssi prvok
-  '2drop':'drop drop', #vymaze dva vrchne prvky
-  'over2':'[over] dip', #skopiruje treti prvok od vrchu pod prvy prvok
-  '2over':'[over] dip swap [over] dip swap', #skopiruje druhy a treti prvok na vrch
-  'burry':'swap over', #skopiruje vrchny prvok pod druhy prvok
-  'rold':'[swap] dip swap', #orotuje trojicu vrchnych prvkov smerom nadol
-  'rolu':'swap [swap] dip', #orotuje trojicu vrchnych prvkov smerom nahor
-  'flip':'swap [swap] dip swap', #zmeni poradie vrchnych troch prvkov
-  'rep':'dup [i] dip i', #vyberie a a potom vykona dvakrat a
-  'poke':'[[drop] dip] dip swap', #vymaze treti prvok od vrchu a vymeni poradie vrchnych dvoch
+  'dup2': '[dup] dip', #zduplikuje druhy najvyssi prvok
+  '2dup': '[dup] dip dup [swap] dip', #zduplikuje vrchne dva prvky
+  'swap2': '[swap] dip', #vymeni druhy a treti prvok
+  '2swap': '[swap] dip swap [[swap] dip swap] dip', #vymeni treti a stvrty prvok s prvym a druhym prvkom
+  'drop2': '[drop] dip', #vymaze druhy najvyssi prvok
+  '2drop': 'drop drop', #vymaze dva vrchne prvky
+  'over2': '[over] dip', #skopiruje treti prvok od vrchu pod prvy prvok
+  '2over': '[over] dip swap [over] dip swap', #skopiruje druhy a treti prvok na vrch
+  'burry': 'swap over', #skopiruje vrchny prvok pod druhy prvok
+  'rold': '[swap] dip swap', #orotuje trojicu vrchnych prvkov smerom nadol
+  'rolu': 'swap [swap] dip', #orotuje trojicu vrchnych prvkov smerom nahor
+  'flip': 'swap [swap] dip swap', #zmeni poradie vrchnych troch prvkov
+  'rep': 'dup [i] dip i', #vyberie a a potom vykona dvakrat a
+  'poke': '[[drop] dip] dip swap', #vymaze treti prvok od vrchu a vymeni poradie vrchnych dvoch
   'dip': 'swap wrap cons i', #odstrani b, vykona a a nasledne b da na vrch
-  '2dip':'wrap dip [dip] dip', #odstrani c, b, vykona a a nasledne c, b vrati na vrch
-  'sip':'over wrap cons i', #skopiruje b, vykona a a ulozi b na vrch
-  '2sip':'[over] dip swap [over] dip swap wrap dip [dip] dip', #skopiruje c, b, vykona a a ulozi c, b na vrch
-  'sap':'swap [i] dip i', #vyberie a, b, vykona a, potom vykona b
-  'swat':'swap cons', #pripoji druhy prvok od vrchu na koniec sekvencie
-  'unswat':'reverse uncons reverse', #rozlozi vrchnu sekvenciu na last a rest
-  'curry':'[wrap] dip cons', #spoji prvky a a b tak, ze prvok b vlozi v zatvorkach pred prvok a
-  '2curry':'curry curry', #spoji prvky a, b, c tak, ze prvky c, b vlozi v zatvorkach pred a
-  'uncurry':'dup [first i] dip rest', #rozpoji prvky tak, ze prvy prvok sekvencie oddeli od zvysku a odzatvorkuje ho
-  'take':'curry reverse', #spoji dva prvky tak, ze druhy prvok vlozi v zatvorkach na koniec sekvencie
-  'cake':'curry dup reverse', #skombinuje curry a take
-  'coup':'[curry] dip dup', #treti prvok vlozi v zatvorkach na zaciatok druhej sekvencie a zduplikuje vrchny prvok
-  'bi':'[sip] dip i', #aplikuje b na c a nasledne a na c
-  'bi*':'[dip] dip i', #aplikuje b na d a nasledne a na c
-  'bi@':'dup [dip] dip i', #aplikuje a na c a nasledne a na b
-  'tri':'[[sip] dip sip] dip i', #aplikuje c na d, nasledne b na d, a nasledne a na d
-  'tri*':'[[wrap dip [dip] dip] dip dip] dip i', #aplikuje c na f, nasledne b na e, a nasledne a na d
-  'tri@':'dup dup [[wrap dip [dip] dip] dip dip] dip i', #aplikuje a na d, nasledne a na c a nasledne a na b
-  'm':'dup i',
-  'z':'drop i',
-  't':'swap i',
-  'w':'[dup] dip i',
-  'k':'[drop] dip i',
-  'c':'[swap] dip i',
-  'b':'[curry] dip i',
-  'b\'':'swap [curry] dip i',
-  'd':'[[curry] dip] dip i ',
-  'l':'[dup curry] dip i',
-  'o':'[dup] dip swap [curry] dip i',
-  'p':'[swap] dip swap i',
-  'q':'swap [curry] dip i',
-  'q\'':'curry swap i',
-  'r':'swap [swap] dip i',
-  's':'[[dup] dip swap [curry] dip] dip i',
-  'v':'[swap] dip swap i',
-  'e':'[[[[wrap] dip wrap cons] dip cons] dip] dip i',
-  'fix':'[dup curry] swap cons dup curry',
-  'y':'fix i',
-  'u':'dup curry over [curry] dip i',
-  'println':'[\n] cat print'
+  '2dip': 'wrap dip [dip] dip', #odstrani c, b, vykona a a nasledne c, b vrati na vrch
+  'sip': 'over wrap cons i', #skopiruje b, vykona a a ulozi b na vrch
+  '2sip': '[over] dip swap [over] dip swap wrap dip [dip] dip', #skopiruje c, b, vykona a a ulozi c, b na vrch
+  'sap': 'swap [i] dip i', #vyberie a, b, vykona a, potom vykona b
+  'swat': 'swap cons', #pripoji druhy prvok od vrchu na koniec sekvencie
+  'unswat': 'reverse uncons reverse', #rozlozi vrchnu sekvenciu na last a rest
+  'curry': '[wrap] dip cons', #spoji prvky a a b tak, ze prvok b vlozi v zatvorkach pred prvok a
+  '2curry': 'curry curry', #spoji prvky a, b, c tak, ze prvky c, b vlozi v zatvorkach pred a
+  'uncurry': 'dup [first i] dip rest', #rozpoji prvky tak, ze prvy prvok sekvencie oddeli od zvysku a odzatvorkuje ho
+  'take': 'curry reverse', #spoji dva prvky tak, ze druhy prvok vlozi v zatvorkach na koniec sekvencie
+  'cake': 'curry dup reverse', #skombinuje curry a take
+  'coup': '[curry] dip dup', #treti prvok vlozi v zatvorkach na zaciatok druhej sekvencie a zduplikuje vrchny prvok
+  'bi': '[sip] dip i', #aplikuje b na c a nasledne a na c
+  'bi*': '[dip] dip i', #aplikuje b na d a nasledne a na c
+  'bi@': 'dup [dip] dip i', #aplikuje a na c a nasledne a na b
+  'tri': '[[sip] dip sip] dip i', #aplikuje c na d, nasledne b na d, a nasledne a na d
+  'tri*': '[[wrap dip [dip] dip] dip dip] dip i', #aplikuje c na f, nasledne b na e, a nasledne a na d
+  'tri@': 'dup dup [[wrap dip [dip] dip] dip dip] dip i', #aplikuje a na d, nasledne a na c a nasledne a na b
+  'm': 'dup i',
+  'z': 'drop i',
+  't': 'swap i',
+  'w': '[dup] dip i',
+  'k': '[drop] dip i',
+  'c': '[swap] dip i',
+  'b': '[curry] dip i',
+  'b\'': 'swap [curry] dip i',
+  'd': '[[curry] dip] dip i ',
+  'l': '[dup curry] dip i',
+  'o': '[dup] dip swap [curry] dip i',
+  'p': '[swap] dip swap i',
+  'q': 'swap [curry] dip i',
+  'q\'': 'curry swap i',
+  'r': 'swap [swap] dip i',
+  's': '[[dup] dip swap [curry] dip] dip i',
+  'v': '[swap] dip swap i',
+  'e': '[[[[wrap] dip wrap cons] dip cons] dip] dip i',
+  'fix': '[dup curry] swap cons dup curry',
+  'y': 'fix i',
+  'u': 'dup curry over [curry] dip i',
+  'println': '[\n] cat print'
 }
 
 _userDictionary_orig = {
-  'fact':['[[dup 1 <=] dip swap [2drop 1] [[dup 1 -] dip i *] ifte] y'],
-  'fibo':['[[dup 2 <] dip swap [drop] [[1 - dup 1 -] dip bi@ +] ifte] y'],
-  'gcd':['[[dup 0 =] dip swap [2drop] [[swap over %] dip i] ifte] y'],
-  'lcm':['over over gcd [* abs] dip //'],
-  'trin':['dup [1 +] dip * 2 /']
+  'fact': ['[[dup 1 <=] dip swap [2drop 1] [[dup 1 -] dip i *] ifte] y'],
+  'fibo': ['[[dup 2 <] dip swap [drop] [[1 - dup 1 -] dip bi@ +] ifte] y'],
+  'gcd': ['[[dup 0 =] dip swap [2drop] [[swap over %] dip i] ifte] y'],
+  'lcm': ['over over gcd [* abs] dip //'],
+  'trin': ['dup [1 +] dip * 2 /']
 }
 
 userDictionary.update(copy.deepcopy(_userDictionary_orig))
