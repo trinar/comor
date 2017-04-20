@@ -896,8 +896,8 @@ def vratToken(retazec):
 def parse(retazec):
   '''vykona jeden token z programu'''
   for token in vratToken(retazec):
-    print('d:', dataStack)
-    print('t:', token)
+    #print('d:', dataStack)
+    #print('t:', token)
     if token in userDictionary: #je token v userDictionary?
       parse(userDictionary[token][-1])
     elif token in _sysDictionary: #je token v sysDictionary?
@@ -937,7 +937,7 @@ def status():
 def demo():
   '''demo funkcia programu'''
   run('Documents/zdrojaky/python/prog.cmr')
-  status()
+  #status()
 
 if __name__ == '__main__':
   demo()

@@ -1,6 +1,3 @@
-[ahoj] [a] def
-[svet] [b] def
-[ako] [c] def
-[sa] [d] def
-[mas] [e] def
-[a b c d e] [i] map println
+library import
+5 dup fact1
+[Faktorial čísla ] print swap print [ je ] print print [.] println
