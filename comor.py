@@ -10,12 +10,14 @@ import copy
 dataStack = []
 helpStack = []
 userDictionary = dict()
+modul = 'this'
 hlasky = ['Vynimka v programe!\n',
           'Zásobník dataStack je prázdny!\n',
           'Zásobník helpStack je prázdny!\n',
           'Zlý formát prvku v dataStack!\n',
           'Nesprávny počet zátvoriek!\n',
-          'Súbor nenájdený!'] #chybove hlasky
+          'Súbor nenájdený!\n',
+          'Modul nenájdený1\n'] #chybove hlasky
 
 def zDS():
   '''vyberie vrchny prvok zo zasobnika dataStack'''
@@ -77,7 +79,7 @@ def over():
   doDS(b)
 
 def wrap():
-  '''vlozi vrchny prvok dozatvoriek'''
+  '''vlozi vrchny prvok do zatvoriek'''
   a = zDS()
   a = '[' + a + ']'
   doDS(a)
@@ -628,7 +630,10 @@ def filter_():
 
 def import_():
   '''importuje prikazy z externeho suboru'''
+  global modul
   a = zDS()
+  modulOld = modul
+  modul = a
   a = a + '.cmr'
   adresar = os.path.abspath(os.path.dirname(__file__))
   subor = os.path.join(adresar, a)
@@ -640,28 +645,45 @@ def import_():
     raise IOError('import: ' + hlasky[5])
   if source: #ak bol nacitany subor
     parse(source)
+  modul = modulOld
+
+def reload_():
+  '''vymaze vsetky funkcie importovaneho modulu a importuje ho znovu'''
+  a = zDS()
+  try:
+    del userDictionary[a]
+    doDS(a)
+    import_()
+  except KeyError:
+    raise KeyError('reload: ' + hlasky[6])
 
 def define():
   '''zadefinuje novu funkciu v userDictionary alebo funkciu vymaze'''
   a = zDS()
   b = zDS()
   if b:
-    if a in userDictionary:
-      userDictionary[a].append(b) #prida nove telo na koniec listu
+    if modul in userDictionary and a in userDictionary[modul]:
+      userDictionary[modul][a].append(b) #prida nove telo na koniec listu
     else:
-      userDictionary[a] = [b] #vytvori novy list
+      if not modul in userDictionary:
+        userDictionary[modul] = dict()
+      userDictionary[modul][a] = [b] #vytvori novy list
   else:
-    if a in userDictionary:
-      if len(userDictionary[a]) > 1:
-        del userDictionary[a][-1] #vymaze naposledy pridane telo funkcie
+    if modul in userDictionary and a in userDictionary[modul]:
+      if len(userDictionary[modul][a]) > 1:
+        del userDictionary[modul][a][-1] #vymaze naposledy pridane telo funkcie
       else:
-        del userDictionary[a]
+        del userDictionary[modul][a]
 
 def show():
   '''vrati vnutro funkcie v userDictionary'''
   a = zDS()
-  if a in userDictionary:
-    doDS(userDictionary[a][-1])
+  try:
+    modul, a = a.split('.')
+  except ValueError:
+    modul = 'this'
+  if modul in userDictionary and a in userDictionary[modul]:
+    doDS(userDictionary[modul][a][-1])
   elif a in _sysDictionary:
     doDS(_sysDictionary[a])
 
@@ -669,7 +691,6 @@ def exist():
   '''zisti, ci funkcia s danym menom existuje v nejakom slovniku'''
   a = zDS()
   doDS(a in userDictionary or a in _sysDictionary or a in _coreDictionary)
-
 
 def emptyd():
   '''zisti, ci je dataStack prazdny'''
@@ -756,6 +777,7 @@ _coreDictionary = {
   'foldr': foldr, #aplikuje binarnu funkciu a postupne na vsetky prvky v b z prava
   'filter': filter_, #vytvori sekvenciu z prvkov b ak splnaju podmienku v a
   'import': import_, #importuje slovnik funkcii s nazvom v najvyssom prvku (subor bez koncovky .cmr)
+  'reload': reload_, #vymaze vsetky funkcie daneho modulu a naimportuje modul znovu
   'del': del_, #resetne uzivatelsky slovnik funkcii
   'reset': reset, #vyprazdni zasobniky a resetne uzivatelsky slovnik funkcii
   'exist': exist, #ak funkcia a existuje v nejakom slovniku vrati true, inak vrati false
@@ -844,11 +866,12 @@ _sysDictionary = {
 }
 
 _userDictionary_orig = {
+  'this': {
   'fact': ['[[dup 1 <=] dip swap [2drop 1] [[dup 1 -] dip i *] ifte] y'],
   'fibo': ['[[dup 2 <] dip swap [drop] [[1 - dup 1 -] dip bi@ +] ifte] y'],
   'gcd': ['[[dup 0 =] dip swap [2drop] [[swap over %] dip i] ifte] y'],
   'lcm': ['over over gcd [* abs] dip //'],
-  'trin': ['dup [1 +] dip * 2 /']
+  'trin': ['dup [1 +] dip * 2 /']}
 }
 
 userDictionary.update(copy.deepcopy(_userDictionary_orig))
@@ -894,23 +917,29 @@ def vratToken(retazec):
       yield token
 
 def parse(retazec):
-  '''vykona jeden token z programu'''
+  '''vykona program v retazci'''
+  global modul
   for token in vratToken(retazec):
-    #print('d:', dataStack)
-    #print('t:', token)
-    if token in userDictionary: #je token v userDictionary?
-      parse(userDictionary[token][-1])
-    elif token in _sysDictionary: #je token v sysDictionary?
-      parse(_sysDictionary[token])
-    elif token in _coreDictionary: #je token v coreDictionary?
-      _coreDictionary[token]()
-    elif token[0] == '[' and token[-1] == ']': #je token v zatvorkach?
+    if token[0] == '[' and token[-1] == ']': #je token v zatvorkach?
       doDS(token[1:-1])
-    else: #je to nieco ine
-      doDS(token)
+    else:
+      try:
+        modulOld = modul
+        modul, token = token.split('.')
+      except ValueError:
+        pass
+      if modul in userDictionary and token in userDictionary[modul]: #je token v userDictionary?
+        parse(userDictionary[modul][token][-1])
+      elif token in _sysDictionary: #je token v sysDictionary?
+        parse(_sysDictionary[token])
+      elif token in _coreDictionary: #je token v coreDictionary?
+        _coreDictionary[token]()
+      else: #je to nieco ine
+        doDS(token)
+      modul = modulOld
 
 def run(subor):
-  '''spusti beh programu'''
+  '''spusti program'''
   if not subor:
     print('Nebol zadaný vstupný súbor s programom alebo program.')
     return
@@ -923,7 +952,7 @@ def run(subor):
       s.close() #zatvori subor
   except IOError:
     source = subor
-  if source: #ak bol nacitany subor
+  if source: #ak bol zadany program
     try:
       parse(source)
     except Exception as e:
